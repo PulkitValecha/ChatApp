@@ -10,7 +10,16 @@ const io = socketio(server)
 app.use('/',express.static(path.join(__dirname, "/public_static")))
 
 io.on('connection',(socket)=>{
-    console.log(socket.id)
+    console.log("User with socket id : " + socket.id + " connected" )
+
+    socket.on('msg',function(data){
+
+        io.emit('msg',data)
+    })
+
+    socket.on('disconnect',()=>{
+        console.log("User with socket id : " + socket.id + " disconnected" )
+    })
 })
 
 server.listen(2323,()=>{
