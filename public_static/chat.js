@@ -5,7 +5,8 @@ $(function(){
     var output = $('#output'),
         handle = $('#handle'),
         message = $('#message'),
-        sendBtn = $('#send')
+        sendBtn = $('#send'),
+        feedbackBox = $('#feedback')
 
     sendBtn.click(function(){
         if(message.val()!="") {
@@ -17,7 +18,23 @@ $(function(){
         }
     })
 
+    message.keypress(function(){
+        socket.emit('typing',{
+            sender: handle.val()
+        })
+    })
+
+    ///Event listners
+
+    socket.on('typing',function(data){
+        feedbackBox.empty().append(`<p><em>${data.sender} + " os typing a message..."</em></p>`)
+        setTimeout(function(){
+            feedbackBox.empty()
+        },2500)
+    })
+
     socket.on('msg',function(data){
+        feedbackBox.empty()
         output.append(`<p><strong>${data.sender} :</strong> ${data.message}</p>`)
     })
 

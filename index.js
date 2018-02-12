@@ -13,8 +13,11 @@ io.on('connection',(socket)=>{
     console.log("User with socket id : " + socket.id + " connected" )
 
     socket.on('msg',function(data){
-
         io.emit('msg',data)
+    })
+
+    socket.on('typing',function(data){
+        socket.broadcast.emit('typing',data)
     })
 
     socket.on('disconnect',()=>{
