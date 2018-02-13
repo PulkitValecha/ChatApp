@@ -7,10 +7,14 @@ const app = express()
 const server = http.Server(app)
 const io = socketio(server)
 
-app.use('/',express.static(path.join(__dirname, "/public_static")))
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
+app.use('/',require('./routes/pages').route)
 
 io.on('connection',(socket)=>{
     console.log("User with socket id : " + socket.id + " connected" )
+    socket.broadcast.emit('add_user',socket.id)
 
     socket.on('msg',function(data){
         io.emit('msg',data)

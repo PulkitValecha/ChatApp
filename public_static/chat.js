@@ -6,7 +6,8 @@ $(function(){
         handle = $('#handle'),
         message = $('#message'),
         sendBtn = $('#send'),
-        feedbackBox = $('#feedback')
+        feedbackBox = $('#feedback'),
+        userlist = $('#active_users')
 
     sendBtn.click(function(){
         if(message.val()!="") {
@@ -27,10 +28,14 @@ $(function(){
     ///Event listners
 
     socket.on('typing',function(data){
-        feedbackBox.empty().append(`<p><em>${data.sender} + " os typing a message..."</em></p>`)
+        feedbackBox.empty().append(`<p><em>${data.sender} is typing a message...</em></p>`)
         setTimeout(function(){
             feedbackBox.empty()
         },2500)
+    })
+
+    socket.on('add_user',function(data){
+        userlist.append(`<p><em>${data}</em></p>`)
     })
 
     socket.on('msg',function(data){

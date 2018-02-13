@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat App</title>
+    <script src="jquery.js"></script>
+    <script src = "/socket.io/socket.io.js"></script>
+    <link href="./bootstrap.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div id="mario-chat">
+    <div id="chat-window">
+        <div id="output"></div>
+        <div id="feedback"></div>
+    </div>
+    <input id="handle" type="text" placeholder="Handle">
+    <input id="message" type="text" placeholder="Message">
+    <button id="send">Send</button>
+</div>
+
+<div class="row">
+
+    <div class="col-sm-3" style="margin:30px auto">
+        <div id="active_users" style="padding-left: 20px; overflow: auto; height: 200px; border: black solid 2px">
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="chat.js"></script>
+
+</body>
+</html>
