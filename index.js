@@ -10,6 +10,8 @@ const io = socketio(server)
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
+app.use(express.static(path.join(__dirname,'public_static')))
+
 app.use('/',require('./routes/pages').route)
 
 io.on('connection',(socket)=>{
