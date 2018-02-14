@@ -1,7 +1,10 @@
 const express = require('express')
 const http = require('http')
-const path =require('path')
 const socketio = require('socket.io')
+const path =require('path')
+const bodyParser = require('body-parser')
+const cp = require('./utils/cookieparser')
+const users = require('./data/users')
 
 const app = express()
 const server = http.Server(app)
@@ -12,7 +15,18 @@ app.use(express.urlencoded({extended: true}))
 
 app.use(express.static(path.join(__dirname,'public_static')))
 
+app.use((req, res, next)=>{
+    let loginCookie = cp.getCookie(req.header('Cookie'),'login')
+    let user = users.getUserWithToken(loginCookie)
+
+    req.user = user
+    next()
+
+})
+
 app.use('/',require('./routes/pages').route)
+app.use('/login',require('./routes/login').route)
+app.use('/signup',require('./routes/signup').route)
 
 io.on('connection',(socket)=>{
     console.log("User with socket id : " + socket.id + " connected" )
