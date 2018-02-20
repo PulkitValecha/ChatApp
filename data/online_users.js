@@ -3,6 +3,8 @@ const socket_ids = {}
 
 exports = module.exports = {
 
+    onuserarray:onusers,
+
     addOnUser(socketid, username){
         onusers[username] = {
             socketid,
@@ -17,7 +19,5 @@ exports = module.exports = {
     removeOnUser(socketid, username){
         delete onusers[username]
     }
-
-
 
 }
