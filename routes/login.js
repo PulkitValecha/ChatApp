@@ -12,10 +12,16 @@ route.post('/',(req, res)=>{
     if(!user){
        return res.redirect('/login')
     }
-    let newToken = users.createToken(user.username)
+    if(user.username == req.body.username && user.password==req.body.password){
+        let newToken = users.createToken(user.username)
 
-    res.header('Set-Cookie', `login = ${newToken}`)
-    res.redirect('/chatapp')
+        res.header('Set-Cookie', `login = ${newToken}`)
+        return res.redirect('/chatapp')
+    }
+
+    else{
+        return res.redirect('/login')
+    }
 
 
 })
