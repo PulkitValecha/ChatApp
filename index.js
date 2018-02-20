@@ -5,6 +5,7 @@ const path =require('path')
 const bodyParser = require('body-parser')
 const cp = require('./utils/cookieparser')
 const users = require('./data/users')
+const onusers = require('./data/online_users')
 
 const app = express()
 const server = http.Server(app)
@@ -35,7 +36,15 @@ app.use('/logout',require('./routes/logout').route)
 
 io.on('connection',(socket)=>{
     console.log("User with socket id : " + socket.id + " connected" )
-    socket.broadcast.emit('add_user',socket.id)
+
+    const login_cookie = (cp.getCookie(socket.request.headers.cookie,'login'))
+    const user = users.getUserWithToken(login_cookie)
+    console.log(user)
+
+    onusers.addOnUser(socket.id,user.username)
+
+
+    io.emit('refreshOnlineUsers',onusers.onuserarray)
 
     socket.on('msg',function(data){
         io.emit('msg',data)
@@ -46,6 +55,7 @@ io.on('connection',(socket)=>{
     })
 
     socket.on('disconnect',()=>{
+        onusers.removeOnUser(socket.id,user.username)
         console.log("User with socket id : " + socket.id + " disconnected" )
     })
 })
