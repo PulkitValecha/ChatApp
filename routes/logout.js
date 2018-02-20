@@ -7,7 +7,7 @@ route.get('/', (req, res)=>{
     let loginCookie = cp.getCookie(req.header('Cookie'), 'login')
     users.removeToken(loginCookie)
 
-    return res.sendFile(path.join(__dirname,'../public_static/login.html'))
+    return res.redirect('/login')
 
 })
 
