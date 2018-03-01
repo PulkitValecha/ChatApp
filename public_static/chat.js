@@ -7,15 +7,31 @@ $(function(){
         message = $('#message'),
         sendBtn = $('#send'),
         feedbackBox = $('#feedback'),
-        userlist = $('#active_users')
+        userlist = $('#active_users'),
+        to_user = $('#other_user')
 
     sendBtn.click(function(){
         if(message.val()!="") {
-            socket.emit('msg', {
-                sender: handle.val(),
-                message: message.val()
-            })
-            message.val('')
+            if(to_user.val()==""){
+                socket.emit('msg', {
+                    sender: handle.val(),
+                    message: message.val(),
+                    toid: 0
+                })
+                console.log("Message sent to all")
+                message.val('')
+            }
+
+            else{
+                socket.emit('msg', {
+                    sender: handle.val(),
+                    message: message.val(),
+                    toid: to_user.val()
+                })
+                console.log("Sent to only one user")
+                message.val('')
+            }
+
         }
     })
 
@@ -34,8 +50,12 @@ $(function(){
         },2500)
     })
 
-    socket.on('add_user',function(data){
-        userlist.append(`<p><em>${data}</em></p>`)
+    socket.on('refreshOnlineUsers',function(data){
+        console.log(data)
+        userlist.empty()
+        Object.values(data).forEach((user)=>{
+            userlist.append(`<p><em>${user.username} + ${user.socketid}</em></p>`)
+        })
     })
 
     socket.on('msg',function(data){

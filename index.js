@@ -47,7 +47,15 @@ io.on('connection',(socket)=>{
     io.emit('refreshOnlineUsers',onusers.onuserarray)
 
     socket.on('msg',function(data){
-        io.emit('msg',data)
+        if(data.toid == 0){
+            console.log("Sent to all")
+            io.emit('msg',data)
+        }
+        else{
+            console.log("Sent to one")
+            io.to(data.toid).to(socket.id).emit('msg',data)
+        }
+
     })
 
     socket.on('typing',function(data){
