@@ -53,7 +53,7 @@ io.on('connection',(socket)=>{
         }
         else{
             console.log("Sent to one")
-            io.to(data.toid).to(socket.id).emit('msg',data)
+            io.to(onusers.getSocketIdByUsername(data.toid)).to(socket.id).emit('msg',data)
         }
 
     })
