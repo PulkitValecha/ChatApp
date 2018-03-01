@@ -18,7 +18,6 @@ $(function(){
                     message: message.val(),
                     toid: 0
                 })
-                console.log("Message sent to all")
                 message.val('')
             }
 
@@ -28,7 +27,6 @@ $(function(){
                     message: message.val(),
                     toid: to_user.val()
                 })
-                console.log("Sent to only one user")
                 message.val('')
             }
 
@@ -51,10 +49,9 @@ $(function(){
     })
 
     socket.on('refreshOnlineUsers',function(data){
-        console.log(data)
         userlist.empty()
         Object.values(data).forEach((user)=>{
-            userlist.append(`<p><em>${user.username} + ${user.socketid}</em></p>`)
+            userlist.append(`<p><em>${user.username}</em></p>`)
         })
     })
 
