@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const cp = require('./utils/cookieparser')
 const users = require('./data/users')
 const onusers = require('./data/online_users')
+const PORT = require('./config.js').PORT
 
 const app = express()
 const server = http.Server(app)
@@ -68,6 +69,6 @@ io.on('connection',(socket)=>{
     })
 })
 
-server.listen(2323,()=>{
-    console.log("Go chatting on http://localhost:2323")
+server.listen(PORT,()=>{
+    console.log("Go chatting on http://localhost:"+PORT)
 })
