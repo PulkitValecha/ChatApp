@@ -4,16 +4,35 @@
     <meta charset="UTF-8">
     <title>Total Connected Users</title>
     <script src = "./socket.io.js"></script>
+    <script src="./jquery.js"></script>
+    <script src="socket_count.js"></script>
 
     <link href="./bootstrap.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
+
 </head>
 <body>
 
-<h1><strong>Count Of Connected Users</strong></h1>
 
-<a href="login.html" class="btn btn-dark">Login</a>
+<div class="site-wrapper">
 
-<a href="signup.html" class="btn btn-dark">Signup</a>
+    <div class="site-wrapper-inner">
+
+        <div class="container">
+
+            <div class="inner cover">
+                <h1 id="count_users" class="cover-heading users">0 Users Connected</h1>
+                <p class="lead"><a target="_blank" style="color: #333333" href="https://github.com/PulkitValecha/ChatApp">github.com/PulkitValecha/ChatApp</a></p>
+                <a href="login.html" class="btn btn-dark">Login</a>
+                <a href="signup.html" class="btn btn-dark">Signup</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 
 </body>
